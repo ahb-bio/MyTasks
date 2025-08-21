@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda Diária</title>
+  <link rel="icon" href="assets/icons/calendar.svg">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="left">
+        <button id="btnPrev" class="icon-btn" title="Dia anterior" aria-label="Dia anterior">◀</button>
+        <h1 id="dateLabel" class="date-label"></h1>
+        <input id="datePicker" type="date" aria-label="Selecionar data" />
+        <button id="btnNext" class="icon-btn" title="Próximo dia" aria-label="Próximo dia">▶</button>
+      </div>
+      <div class="right">
+        <select id="filterCategory" class="filter" title="Filtrar por categoria">
+          <option value="all">Todas as categorias</option>
+          <option value="sleep">Sono</option>
+          <option value="wake">Acordar</option>
+          <option value="task">Tarefa</option>
+          <option value="work">Trabalho</option>
+          <option value="appointment">Compromisso</option>
+          <option value="social">Social</option>
+          <option value="walk">Caminhada</option>
+          <option value="workout">Academia</option>
+          <option value="sauna">Sauna</option>
+          <option value="cold">Banho gelado</option>
+          <option value="meal">Refeição</option>
+        </select>
+        <button id="btnNew" class="primary-btn">+ Adicionar evento</button>
+        <div class="menu">
+          <button id="btnMenu" class="icon-btn" title="Mais opções" aria-label="Mais opções">⋯</button>
+          <div class="menu-panel" id="menuPanel" hidden>
+            <button id="btnExport">Exportar (.json)</button>
+            <button id="btnImport">Importar (.json)</button>
+            <button id="btnSeed">Carregar amostra</button>
+            <button id="btnClear">Limpar dia</button>
+          </div>
+        </div>
+        <input id="fileImport" type="file" accept="application/json" hidden />
+      </div>
+    </header>
+
+    <main class="timeline-wrap">
+      <section id="eventsList" class="events-list" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <!-- Modal: Add/Edit Event -->
+  <dialog id="eventModal" class="modal">
+    <form method="dialog" id="eventForm" class="modal-card">
+      <header class="modal-header">
+        <h2 id="modalTitle">Novo evento</h2>
+        <div class="spacer"></div>
+        <button type="button" id="deleteEventBtn" class="danger-outline small" hidden>Excluir</button>
+      </header>
+      <div class="form-grid">
+        <label>Título
+          <input type="text" id="titleInput" required maxlength="120" placeholder="Nome do evento/tarefa">
+        </label>
+        <label>Data
+          <input type="date" id="dateInput" required>
+        </label>
+        <label>Início
+          <input type="time" id="startInput" required>
+        </label>
+        <label>Fim
+          <input type="time" id="endInput" required>
+        </label>
+        <label>Categoria / Ícone
+          <select id="categoryInput" required>
+            <option value="task">Tarefa</option>
+            <option value="work">Trabalho</option>
+            <option value="appointment">Compromisso</option>
+            <option value="social">Social</option>
+            <option value="walk">Caminhada</option>
+            <option value="workout">Academia</option>
+            <option value="sauna">Sauna</option>
+            <option value="cold">Banho gelado</option>
+            <option value="meal">Refeição</option>
+            <option value="sleep">Sono</option>
+            <option value="wake">Acordar</option>
+          </select>
+        </label>
+        <label>Descrição (opcional)
+          <textarea id="descInput" rows="3" placeholder="Notas, séries de treino, detalhes, etc."></textarea>
+        </label>
+      </div>
+      <footer class="actions">
+        <button value="cancel" class="ghost-btn">Cancelar</button>
+        <button id="saveEventBtn" value="default" class="primary-btn">Salvar</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Modal: Conflict -->
+  <dialog id="conflictModal" class="modal">
+    <form method="dialog" class="modal-card">
+      <header class="modal-header"><h2>Conflito de horário</h2></header>
+      <div class="content" id="conflictContent"></div>
+      <footer class="actions">
+        <button id="btnAddAnyway" class="ghost-btn" type="button">Adicionar assim mesmo</button>
+        <button id="btnReplace" class="danger-btn" type="button">Substituir conflito(s)</button>
+        <button id="btnSuggest" class="primary-btn" type="button">Sugerir novo horário</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- Modal: Confirm delete -->
+  <dialog id="confirmModal" class="modal">
+    <form method="dialog" class="modal-card">
+      <header class="modal-header"><h2>Excluir evento</h2></header>
+      <div class="content">
+        <p>Tem certeza de que deseja excluir este evento?</p>
+      </div>
+      <footer class="actions">
+        <button value="cancel" class="ghost-btn">Cancelar</button>
+        <button id="btnConfirmDelete" class="danger-btn">Excluir</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
