@@ -7,7 +7,7 @@ const STORAGE_KEY = "agendaDataV1";
 // Para sincronizar em vários dispositivos via GitHub, publique o backend incluído (Vercel) e
 // informe abaixo a URL pública da função (ex.: "https://seu-app.vercel.app/api/sync").
 // Se vazio, a sincronização remota fica desativada.
-const REMOTE_URL = ""; // <- defina sua URL aqui
+const REMOTE_URL = "https://agenda-dados-henrique-bezerras-projects.vercel.app/"; // <- defina sua URL aqui
 const SYNC_ENABLED = !!REMOTE_URL;
 const STORAGE_SHA_KEY = "agendaDataV1_sha";
 
